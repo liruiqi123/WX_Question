@@ -278,7 +278,7 @@ Page({
       url: '/pages/index/index',
     })
   },
-  //关闭  开始游戏
+  //关闭规则说明  开始游戏
   closeRule: function () {
     var frequency;
     this.setData({
@@ -294,7 +294,11 @@ Page({
     // app.postLogin(postUrl, postData, function (res) {
     app.request(postUrl, postData, function (res) {
       // console.log(res)
-      if (res.data.code == 20000) {
+      console.log(res);
+      console.log(res.data.code);
+      console.log(res.data.msg);
+
+      if (res.data.code == 40500) {
         isPlay = 1
         nowfrequency = 0
         that.loading();
@@ -756,6 +760,7 @@ Page({
       ruleText: app.globalData.ruleText,
       life: app.globalData.life
     })
+   
     // 注释
     this.loop();
   },
@@ -809,7 +814,9 @@ Page({
     var that = this;
     // app.postLogin(postUrl, postData, function (res) {
     app.request(postUrl, postData, function (res) {
-      // console.log(res)
+      console.log(res);
+      console.log(res.data.code);
+      console.log(res.data.msg);
       if (res.data.code == 20000) {
         let data = res.data.quests
         let qa = []

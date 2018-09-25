@@ -26,7 +26,7 @@ App({
     title: '究竟谁是答题王, 等你来挑战! !',
     iv:'',
     encryptedData:'',
-    // thisImg: "/images/wd/bg.png"
+    thisImg: "/images/wd/bg.png"
   },
   getSign: function () {
     var timestamp = Math.round(new Date().getTime() / 1000);

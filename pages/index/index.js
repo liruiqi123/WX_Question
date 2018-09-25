@@ -154,6 +154,7 @@ Page({
     if ( mask ) {
       mask = false
       var frequency = this.data.frequency
+      console.log(frequency);
       // 挑战次数判断
       // console.log(frequency)
       if (frequency == 0){
@@ -175,6 +176,7 @@ Page({
           return false;
         }
       }
+      
       // var rule = {
       //   ruleText: this.data.gametext
       // }
@@ -274,7 +276,7 @@ Page({
       };
     // app.postLogin(postUrl, postData, function (res) {
     app.request(postUrl, postData, function (res) {
-      // console.log(res);
+      console.log(res.data.data);
       if (res.data.code == 20000) {
         wx.showToast({
           title: '转发成功',
@@ -375,7 +377,7 @@ Page({
   },
 
   ifHasUserInfo: function () {
-    var info = app.globalData.userInfo,
+      var info = app.globalData.userInfo,
       tok = app.globalData.token,
       postData = {},
       // pid = app.globalData.pid || pid,
@@ -392,15 +394,19 @@ Page({
       page: 1
     };
     // app.postLogin(postUrl, postData, this.initial);
+
     app.request(postUrl, postData, this.initial ,this)
+
   },
 
   initial: function (res) {
+    console.log(res.data.data);
     if (res.data.code == 20000) {
       var data = res.data.data;
       // console.log(data)
       var ruleText = data.rule_text;
-      var money = data.money;
+      //var money = data.money; 原来的方法中未有money值传回，暂时写一个默认值
+      var money = 100;
       var more = parseInt(data.moreFlag);
       // 无挑战机会弹框按钮开关
       app.globalData.flag = data.flag || 0;
@@ -416,7 +422,9 @@ Page({
       app.globalData.flag6 = data.flag6 || 1;
       // app.globalData.flag = 1;
       // app.globalData.rule_text = data.ruleText;
-      app.globalData.frequency = data.ctime || 0;
+      //这个地方做过修改，若娶不到data.ctime 则给之为0，现在为了调试，使用其为默认的6
+      //app.globalData.frequency = data.ctime || 0;
+      app.globalData.frequency = data.ctime || 6;
       app.globalData.title = !data.title ? '究竟谁是答题王, 等你来挑战! !' : data.title;
       // 游戏中可以转发多少次
       app.globalData.nowfrequency = data.share_revive_time || 3;
